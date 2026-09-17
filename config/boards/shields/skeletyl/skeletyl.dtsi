@@ -33,12 +33,12 @@
         diode-direction = "row2col";
 
         // 4 filas físicas cableadas (orden firmware R0..R3):
-        //   R0 = P0.02 (pro_micro 19)  → F7 (q w e r t)
-        //   R1 = P0.22 (pro_micro  4)  → D4 (a s d f g)   [nota: el usuario cableó
-        //   R2 = P0.24 (pro_micro  5)  → C6 (z x c v b)    C6/D4 invertidos vs QMK]
+        //   R0 = P1.15 (pro_micro 14)  → F7 (q w e r t)   [cable movido de P0.02 a P1.15]
+        //   R1 = P0.22 (pro_micro  4)  → D4 (a s d f g)   [C6/D4 invertidos vs QMK]
+        //   R2 = P0.24 (pro_micro  5)  → C6 (z x c v b)
         //   R3 = P1.06 (pro_micro  9)  → B5 (thumbs)
         row-gpios
-            = <&pro_micro 19 (GPIO_ACTIVE_HIGH)>
+            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>
             , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>
             , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>
             , <&pro_micro  9 (GPIO_ACTIVE_HIGH)>
