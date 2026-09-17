@@ -1,8 +1,25 @@
 /*
- * DIAGNÓSTICO — 8 filas alternativas, 1 sola col
+ * DIAGNÓSTICO v3 — mapeo pro_micro corregido
  *
- * Cada fila se asigna a una letra. Puentear P0.29 (F5) con cada
- * pin y ver qué letra sale.
+ * gpio-map oficial nice_nano v2 (de /connector):
+ *   pro_micro  0 = P0.08 (RX)
+ *   pro_micro  1 = P0.06 (TX)
+ *   pro_micro  2 = P0.17 (SCK)
+ *   pro_micro  3 = P0.20 (MISO)
+ *   pro_micro  4 = P0.22 (MOSI)
+ *   pro_micro  5 = P0.24 (CS)
+ *   pro_micro  6 = P1.00 (SDA)
+ *   pro_micro  7 = P0.11 (SCL)
+ *   pro_micro  8 = P1.04
+ *   pro_micro  9 = P1.06
+ *   pro_micro 10 = P0.09 (NFC1)
+ *   pro_micro 14 = P1.11
+ *   pro_micro 15 = P1.13 (SDA1)
+ *   pro_micro 16 = P0.10 (NFC2)
+ *   pro_micro 18 = P1.15 (SCL1)
+ *   pro_micro 19 = P0.02 (A1)
+ *   pro_micro 20 = P0.29 (A2)
+ *   pro_micro 21 = P0.31 (A3)
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -32,21 +49,20 @@
 
 	kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN_TEST2";
+        label = "KSCAN_TEST3";
         wakeup-source;
         diode-direction = "row2col";
 
-        // 8 GPIOs que NO son USB ni power ni debug.
-        // [test1: P1.15=NO, P0.31=NO, P0.06=NO, P1.00=SÍ]
+        // 8 GPIOs candidatos para R1 (F7), col = P0.29
         row-gpios
-            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // 0  P1.15 (D14/SCL1)  → Q   [test1: NO]
-            , <&pro_micro 21 (GPIO_ACTIVE_HIGH)>     // 1  P0.31 (D21/A3)    → W   [test1: NO]
-            , <&pro_micro  2 (GPIO_ACTIVE_HIGH)>     // 2  P0.17 (D2/SCK)    → E   [nuevo]
-            , <&pro_micro  3 (GPIO_ACTIVE_HIGH)>     // 3  P0.20 (D3/MISO)   → R   [nuevo]
-            , <&pro_micro 13 (GPIO_ACTIVE_HIGH)>     // 4  P1.13 (D13/SDA1)  → T   [nuevo]
-            , <&pro_micro 11 (GPIO_ACTIVE_HIGH)>     // 5  P0.10 (D11/NFC2)  → Y   [nuevo]
-            , <&pro_micro 12 (GPIO_ACTIVE_HIGH)>     // 6  P1.11 (D12)       → U   [nuevo]
-            , <&pro_micro  6 (GPIO_ACTIVE_HIGH)>     // 7  P1.00 (D6/SDA)    → I   [test1: SÍ, control]
+            = <&pro_micro 18 (GPIO_ACTIVE_HIGH)>      // 0  P1.15 (D14/SCL1)  → Q
+            , <&pro_micro 19 (GPIO_ACTIVE_HIGH)>      // 1  P0.02 (D19/A1)    → W   [R1 actual]
+            , <&pro_micro 21 (GPIO_ACTIVE_HIGH)>      // 2  P0.31 (D21/A3)    → E
+            , <&pro_micro  1 (GPIO_ACTIVE_HIGH)>      // 3  P0.06 (D1/RX)     → R
+            , <&pro_micro  2 (GPIO_ACTIVE_HIGH)>      // 4  P0.17 (D2/SCK)    → T
+            , <&pro_micro 15 (GPIO_ACTIVE_HIGH)>      // 5  P1.13 (D13/SDA1)  → Y
+            , <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // 6  P1.11 (D12)       → U
+            , <&pro_micro 16 (GPIO_ACTIVE_HIGH)>      // 7  P0.10 (D11/NFC2)  → I
             ;
     };
 
