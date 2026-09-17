@@ -1,15 +1,10 @@
 /*
- * DIAGNÓSTICO — fila única, muchas filas alternativas
+ * DIAGNÓSTICO AMPLIO — 12 filas alternativas, 1 sola col
  *
- * keymap:
- *   col 0 (P0.29) + row 0 (P1.15)  → Q
- *   col 0 (P0.29) + row 1 (P0.31)  → W
- *   col 0 (P0.29) + row 2 (P0.06)  → E
- *   col 0 (P0.29) + row 3 (P1.00)  → R
+ * Cada fila se asigna a una letra. Puentear P0.29 (F5) con cada
+ * pin y ver qué letra sale.
  *
- * Puentear P0.29 con cada uno de esos pines y ver qué letra sale.
- * Si NO sale ninguna letra → el problema está en el pin P0.29 o el driver.
- * Si salen algunas → sabemos qué pines están vivos.
+ * Si una fila no responde → ese pin está muerto o no se puede usar como row.
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -24,27 +19,44 @@
 	default_transform: keymap_transform_0 {
 		compatible = "zmk,matrix-transform";
 		columns = <1>;
-		rows    = <4>;
+		rows    = <12>;
 		map = <
 			RC(0,0)
 			RC(1,0)
 			RC(2,0)
 			RC(3,0)
+			RC(4,0)
+			RC(5,0)
+			RC(6,0)
+			RC(7,0)
+			RC(8,0)
+			RC(9,0)
+			RC(10,0)
+			RC(11,0)
 		>;
 	};
 
 	kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN_TEST";
+        label = "KSCAN_TEST2";
         wakeup-source;
         diode-direction = "row2col";
 
-        // 4 filas alternativas, todas probando con la misma col P0.29 (C1)
+        // 12 GPIOs del nice_nano v2 que NO son USB ni power ni debug SWD.
+        // Pines que YA probamos en test1: P1.15, P0.31, P0.06, P1.00.
         row-gpios
-            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // P1.15 → Q  (D14 / SCL1)
-            , <&pro_micro 21 (GPIO_ACTIVE_HIGH)>     // P0.31 → W  (D21 / A3)
-            , <&pro_micro  0 (GPIO_ACTIVE_HIGH)>     // P0.06 → E  (D0  / TX)
-            , <&pro_micro  6 (GPIO_ACTIVE_HIGH)>     // P1.00 → R  (D6  / SDA)
+            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // 0  P1.15 (D14/SCL1) → Q   [test1: NO]
+            , <&pro_micro 21 (GPIO_ACTIVE_HIGH)>     // 1  P0.31 (D21/A3)    → W   [test1: NO]
+            , <&pro_micro  0 (GPIO_ACTIVE_HIGH)>     // 2  P0.06 (D0/TX)     → E   [test1: NO]
+            , <&pro_micro  6 (GPIO_ACTIVE_HIGH)>     // 3  P1.00 (D6/SDA)    → R   [test1: SÍ]
+            , <&pro_micro  1 (GPIO_ACTIVE_HIGH)>     // 4  P0.08 (D1/RX)     → T   [nuevo]
+            , <&pro_micro  2 (GPIO_ACTIVE_HIGH)>     // 5  P0.17 (D2/SCK)    → Y   [nuevo]
+            , <&pro_micro  3 (GPIO_ACTIVE_HIGH)>     // 6  P0.20 (D3/MISO)   → U   [nuevo]
+            , <&pro_micro 13 (GPIO_ACTIVE_HIGH)>     // 7  P1.13 (D13/SDA1)  → I   [nuevo]
+            , <&pro_micro 11 (GPIO_ACTIVE_HIGH)>     // 8  P0.10 (D11/NFC2)  → O   [nuevo]
+            , <&pro_micro 12 (GPIO_ACTIVE_HIGH)>     // 9  P1.11 (D12)       → P   [nuevo]
+            , <&pro_micro  8 (GPIO_ACTIVE_HIGH)>     // 10 P1.04 (D8)        → A   [nuevo]
+            , <&pro_micro 10 (GPIO_ACTIVE_HIGH)>     // 11 P0.09 (D10/NFC1)  → S   [nuevo]
             ;
     };
 
