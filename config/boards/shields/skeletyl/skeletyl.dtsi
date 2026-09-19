@@ -1,25 +1,7 @@
 /*
- * DIAGNÓSTICO v3 — mapeo pro_micro corregido
+ * Copyright (c) 2020 The ZMK Contributors
  *
- * gpio-map oficial nice_nano v2 (de /connector):
- *   pro_micro  0 = P0.08 (RX)
- *   pro_micro  1 = P0.06 (TX)
- *   pro_micro  2 = P0.17 (SCK)
- *   pro_micro  3 = P0.20 (MISO)
- *   pro_micro  4 = P0.22 (MOSI)
- *   pro_micro  5 = P0.24 (CS)
- *   pro_micro  6 = P1.00 (SDA)
- *   pro_micro  7 = P0.11 (SCL)
- *   pro_micro  8 = P1.04
- *   pro_micro  9 = P1.06
- *   pro_micro 10 = P0.09 (NFC1)
- *   pro_micro 14 = P1.11
- *   pro_micro 15 = P1.13 (SDA1)
- *   pro_micro 16 = P0.10 (NFC2)
- *   pro_micro 18 = P1.15 (SCL1)
- *   pro_micro 19 = P0.02 (A1)
- *   pro_micro 20 = P0.29 (A2)
- *   pro_micro 21 = P0.31 (A3)
+ * SPDX-License-Identifier: MIT
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -33,36 +15,40 @@
 
 	default_transform: keymap_transform_0 {
 		compatible = "zmk,matrix-transform";
-		columns = <1>;
-		rows    = <8>;
+		columns = <10>;
+		rows    = <4>;
+		// thumbs en fila 3 (cols 0, 2, 3 = F5, D7, E6)
 		map = <
-			RC(0,0)
-			RC(1,0)
-			RC(2,0)
-			RC(3,0)
-			RC(4,0)
-			RC(5,0)
-			RC(6,0)
-			RC(7,0)
+		 RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)   RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9)
+		 RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4)   RC(1,5) RC(1,6) RC(1,7) RC(1,8) RC(1,9)
+		 RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4)   RC(2,5) RC(2,6) RC(2,7) RC(2,8) RC(2,9)
+		             RC(3,2) RC(3,3) RC(3,0)        RC(3,9) RC(3,6) RC(3,7)
 		>;
 	};
 
-	kscan0: kscan {
+	 kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN_TEST3";
+        label = "KSCAN";
         wakeup-source;
         diode-direction = "row2col";
 
-        // 8 GPIOs candidatos para R1 (F7), col = P0.29
+        // Pines que VERIFICADAMENTE responden en este nice_nano v2:
+        //
+        //   Filas (4):
+        //     R0 F7  = P1.11 (D12)       ← cable movido desde P0.02 (muerto)
+        //     R1 C6  = P0.24 (D5/CS)
+        //     R2 D4  = P0.22 (D4/MOSI)   [C6/D4 invertidos vs QMK upstream]
+        //     R3 B5  = P1.06 (D9)        [thumb cluster]
+        //
+        //   Cols (5): P0.29, P0.09, P1.00, P0.11, P1.04 (todas OK)
+        //
+        // Pines confirmados MUERTOS en este MCU: P0.02, P0.31, P1.15, P0.06,
+        // P0.17, P1.13.
         row-gpios
-            = <&pro_micro 18 (GPIO_ACTIVE_HIGH)>      // 0  P1.15 (D14/SCL1)  → Q
-            , <&pro_micro 19 (GPIO_ACTIVE_HIGH)>      // 1  P0.02 (D19/A1)    → W   [R1 actual]
-            , <&pro_micro 21 (GPIO_ACTIVE_HIGH)>      // 2  P0.31 (D21/A3)    → E
-            , <&pro_micro  1 (GPIO_ACTIVE_HIGH)>      // 3  P0.06 (D1/RX)     → R
-            , <&pro_micro  2 (GPIO_ACTIVE_HIGH)>      // 4  P0.17 (D2/SCK)    → T
-            , <&pro_micro 15 (GPIO_ACTIVE_HIGH)>      // 5  P1.13 (D13/SDA1)  → Y
-            , <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // 6  P1.11 (D12)       → U
-            , <&pro_micro 16 (GPIO_ACTIVE_HIGH)>      // 7  P0.10 (D11/NFC2)  → I
+            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // R0 F7 = P1.11 (D12)
+            , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>      // R1 C6 = P0.24 (D5/CS)
+            , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>      // R2 D4 = P0.22 (D4/MOSI)
+            , <&pro_micro  9 (GPIO_ACTIVE_HIGH)>      // R3 B5 = P1.06 (D9)
             ;
     };
 
