@@ -1,9 +1,8 @@
 /*
- * DIAGNÓSTICO v5 — solo 4 filas + BLE desactivado
+ * DIAGNÓSTICO v5b — 4 filas, BLE activo (sin bt_none)
  *
- * Filas alternativas: R0=P1.11, R1=P0.22, R2=P0.24, R3=P1.06
- * Col única: P0.29 (pro_micro 20)
- * Ble: desactivado para emitir HID standalone por USB
+ * Filas: P1.11, P0.22, P0.24, P1.06
+ * Col única: P0.29
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -13,12 +12,6 @@
 	chosen {
 		zmk,kscan = &kscan0;
 		zmk,matrix_transform = &default_transform;
-		zmk,bt = &bt_none;
-	};
-
-	bt_none: bt_none {
-		compatible = "zmk,bt-unknown";
-		status = "disabled";
 	};
 
 	default_transform: keymap_transform_0 {
@@ -35,15 +28,15 @@
 
 	kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN_TEST5";
+        label = "KSCAN_TEST5b";
         wakeup-source;
         diode-direction = "row2col";
 
         row-gpios
-            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // 0  P1.11 → Q
-            , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>     // 1  P0.22 → T
-            , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>     // 2  P0.24 → Y
-            , <&pro_micro  9 (GPIO_ACTIVE_HIGH)>     // 3  P1.06 → P
+            = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>
+            , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>
+            , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>
+            , <&pro_micro  9 (GPIO_ACTIVE_HIGH)>
             ;
     };
 
