@@ -6,17 +6,16 @@
 
 #include "skeletyl.dtsi"
 
-// Mitad derecha: 5 cols espejo de la izquierda.
 &default_transform {
     col-offset = <5>;
 };
 
 &kscan0 {
-    col-gpios
-        = <&pro_micro  8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // C6 B4 = P1.04
-        , <&pro_micro  7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // C7 E6 = P0.11
-        , <&pro_micro  6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // C8 D7 = P1.00
-        , <&pro_micro 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // C9 B6 = P0.09
-        , <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // C10 F5 = P0.29
+    col-gpios                                            // espejo de la izquierda
+        = <&pro_micro  8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro  7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro  6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         ;
 };
