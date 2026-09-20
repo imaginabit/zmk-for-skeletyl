@@ -50,8 +50,8 @@
         // Pines MUERTOS en este MCU (no usar): P0.02, P0.31, P1.15, P1.13.
         row-gpios
             = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>      // R0 F7 = P1.11 (D12)
-            , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>      // R1 C6 = P0.24 (D5/CS)
-            , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>      // R2 D4 = P0.22 (D4/MOSI)
+            , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>      // R1 C6 = P0.22 (D4/MOSI)  [fila asdfg física]
+            , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>      // R2 D4 = P0.24 (D5/CS)    [fila zxcvb física]
             , <&pro_micro  9 (GPIO_ACTIVE_HIGH)>      // R3 B5 = P1.06 (D9)
             ;
     };
