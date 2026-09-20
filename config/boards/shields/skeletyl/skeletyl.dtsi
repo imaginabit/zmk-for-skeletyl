@@ -1,17 +1,19 @@
 /*
- * DIAGNÓSTICO v6 — 1 fila, 5 cols, mismas GPIO que el firmware de la izquierda
+ * DIAGNÓSTICO v7 — corregido: matrix transform con cols 5-9
  *
- * Para descartar problemas de tamaño de matriz.
+ * El CMakeLists.txt incluye siempre skeletyl_right.overlay que añade
+ * col-offset=<5>. Así que el kscan reporta cols 5-9, no 0-4.
+ * La matrix transform DEBE usar cols 5-9 para que coincidan.
  *
- * Fila única: P1.11 (R0 firmware izq)
- * 5 cols: P0.29, P0.09, P1.00, P0.11, P1.04
+ * Fila única: P1.11 (R0)
+ * 5 cols: P0.29, P0.09, P1.00, P0.11, P1.04 (con col-offset=5 → cols 5-9)
  *
- * Cada puente P1.11 ↔ Px emite una letra distinta:
- *   P1.11 + P0.29 = q
- *   P1.11 + P0.09 = w
- *   P1.11 + P1.00 = e
- *   P1.11 + P0.11 = r
- *   P1.11 + P1.04 = t
+ * Cada puente P1.11 ↔ Px emite una letra:
+ *   P1.11 + P0.29 = q  (col5)
+ *   P1.11 + P0.09 = w  (col6)
+ *   P1.11 + P1.00 = e  (col7)
+ *   P1.11 + P0.11 = r  (col8)
+ *   P1.11 + P1.04 = t  (col9)
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -25,16 +27,16 @@
 
 	default_transform: keymap_transform_0 {
 		compatible = "zmk,matrix-transform";
-		columns = <5>;
+		columns = <10>;
 		rows    = <1>;
 		map = <
-			RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)
+			RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9)
 		>;
 	};
 
 	kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN_TEST6";
+        label = "KSCAN_TEST7";
         wakeup-source;
         diode-direction = "row2col";
 
