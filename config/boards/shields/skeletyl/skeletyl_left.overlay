@@ -1,5 +1,13 @@
 #include "skeletyl.dtsi"
 
+/ {
+    chosen { zmk,bt = &bt_none; };
+    bt_none: bt_none {
+        compatible = "zmk,bt-unknown";
+        status = "disabled";
+    };
+};
+
 &kscan0 {
     col-gpios
         = <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>   // P0.29 (F5 / A2)
