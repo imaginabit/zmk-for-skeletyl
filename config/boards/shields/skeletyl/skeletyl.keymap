@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2020 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
@@ -12,10 +6,7 @@
         compatible = "zmk,keymap";
         default_layer {
             bindings = <
-                &kp Q
-                &kp T
-                &kp Y
-                &kp P
+                &kp Q &kp W &kp E &kp R &kp T
             >;
         };
     };

@@ -1,8 +1,17 @@
 /*
- * DIAGNÓSTICO v5b — 4 filas, BLE activo (sin bt_none)
+ * DIAGNÓSTICO v6 — 1 fila, 5 cols, mismas GPIO que el firmware de la izquierda
  *
- * Filas: P1.11, P0.22, P0.24, P1.06
- * Col única: P0.29
+ * Para descartar problemas de tamaño de matriz.
+ *
+ * Fila única: P1.11 (R0 firmware izq)
+ * 5 cols: P0.29, P0.09, P1.00, P0.11, P1.04
+ *
+ * Cada puente P1.11 ↔ Px emite una letra distinta:
+ *   P1.11 + P0.29 = q
+ *   P1.11 + P0.09 = w
+ *   P1.11 + P1.00 = e
+ *   P1.11 + P0.11 = r
+ *   P1.11 + P1.04 = t
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
@@ -16,27 +25,21 @@
 
 	default_transform: keymap_transform_0 {
 		compatible = "zmk,matrix-transform";
-		columns = <1>;
-		rows    = <4>;
+		columns = <5>;
+		rows    = <1>;
 		map = <
-			RC(0,0)
-			RC(1,0)
-			RC(2,0)
-			RC(3,0)
+			RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)
 		>;
 	};
 
 	kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN_TEST5b";
+        label = "KSCAN_TEST6";
         wakeup-source;
         diode-direction = "row2col";
 
         row-gpios
             = <&pro_micro 14 (GPIO_ACTIVE_HIGH)>
-            , <&pro_micro  4 (GPIO_ACTIVE_HIGH)>
-            , <&pro_micro  5 (GPIO_ACTIVE_HIGH)>
-            , <&pro_micro  9 (GPIO_ACTIVE_HIGH)>
             ;
     };
 
