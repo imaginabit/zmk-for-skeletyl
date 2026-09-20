@@ -5,8 +5,18 @@
     keymap {
         compatible = "zmk,keymap";
         default_layer {
+            /*  Matrix 4x10:
+             *  C0  C1  C2  C3  C4   C5  C6  C7  C8  C9
+             *   q   w   e   r   t   y   u   i   o   p    R0
+             *   a   s   d   f   g   h   j   k   l   ñ    R1
+             *   z   x   c   v   b   n   m   ,   .   ;    R2
+             *          C2  C3  C0         C9  C6  C7      R3 (thumbs)
+             */
             bindings = <
-                &kp Q &kp W &kp E &kp R &kp T
+                &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U &kp I &kp O &kp P
+                &kp A &kp S &kp D &kp F &kp G   &kp H &kp J &kp K &kp L &kp N
+                &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M &kp COMM &kp DOT &kp SCLN
+                          &kp F2 &kp F3 &kp F1   &kp F12 &kp F6 &kp F7
             >;
         };
     };
